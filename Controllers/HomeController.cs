@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Taerar.Models;
@@ -12,6 +13,7 @@ namespace Taerar.Controllers
     {
         public IActionResult Index()
         {
+            Console.WriteLine(GetIpAddress());
             return View();
         }
 
@@ -24,6 +26,21 @@ namespace Taerar.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public static string GetIpAddress()  // Get IP Address
+        {
+            string ip = "";
+            IPHostEntry ipEntry = Dns.GetHostEntry(GetCompCode());
+            IPAddress[] addr = ipEntry.AddressList;
+            ip = addr[2].ToString();
+            return ip;
+        }
+        public static string GetCompCode()  // Get Computer Name
+        {
+            string strHostName = "";
+            strHostName = Dns.GetHostName();
+            return strHostName;
         }
     }
 }
