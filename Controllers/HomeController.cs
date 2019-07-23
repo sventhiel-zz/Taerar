@@ -13,7 +13,7 @@ namespace Taerar.Controllers
     {
         public IActionResult Index()
         {
-            Console.WriteLine(GetIpAddress());
+            Console.WriteLine($"IP ADDRESS: {GetIpAddress()}");
             return View();
         }
 
@@ -33,7 +33,7 @@ namespace Taerar.Controllers
             string ip = "";
             IPHostEntry ipEntry = Dns.GetHostEntry(GetCompCode());
             IPAddress[] addr = ipEntry.AddressList;
-            ip = addr[2].ToString();
+            ip = addr[0].ToString();
             return ip;
         }
         public static string GetCompCode()  // Get Computer Name
